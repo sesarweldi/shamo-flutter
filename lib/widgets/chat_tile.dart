@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:shamo/models/product_model.dart';
 import 'package:shamo/theme.dart';
+
+import '../models/message_model.dart';
+import '../pages/detail_chat_page.dart';
 
 
 class ChatTile extends StatelessWidget {
-  const ChatTile({Key? key}) : super(key: key);
+  final MessageModel message;
+  ChatTile(this.message);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Navigator.pushNamed(context, "/detail-chat");
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailChatPage(UninitializedProductsModel())
+          ),
+        );
       },
       child: Container(
         margin: EdgeInsets.only(top: 33, ),
@@ -24,7 +34,7 @@ class ChatTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("Shoe Store", style: primaryTextStyle.copyWith(fontSize: 15),),
-                      Text("Good night, This item is on... asjdn asj dsank jdasnj kasn jn", style: secondaryTextStyle.copyWith(fontSize: 14,fontWeight: light),overflow: TextOverflow.ellipsis,),
+                      Text(message.message!, style: secondaryTextStyle.copyWith(fontSize: 14,fontWeight: light),overflow: TextOverflow.ellipsis,),
                     ],
                   ),
                 ),

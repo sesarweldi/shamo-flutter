@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:shamo/theme.dart';
 
+import '../models/product_model.dart';
+import '../pages/product_page.dart';
+
 class ProductTile extends StatelessWidget {
-  const ProductTile({Key? key}) : super(key: key);
+  final ProductModel product;
+  ProductTile(this.product);
+
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: ()=> Navigator.pushNamed(context, "/product"),
+      onTap: ()=>  Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProductPage(product),
+        ),
+      ),
       child: Container(
         margin: EdgeInsets.only(
             left: defaultMargin, right: defaultMargin, top: defaultMargin),
@@ -15,8 +25,8 @@ class ProductTile extends StatelessWidget {
           children: [
             ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: Image.asset(
-                  "assets/image_shoes.png",
+                child: Image.network(
+                  product.galleries![0].url,
                   width: 120,
                   height: 120,
                   fit: BoxFit.cover,
@@ -27,20 +37,20 @@ class ProductTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Football",
+                  product.category!.name,
                   style: secondaryTextStyle.copyWith(
                       fontWeight: regular, fontSize: 12),
                 ),
                 SizedBox(height: 6,),
                 Text(
-                  "Predator 20.3 Firm Ground",
+                  product.name!,
                   style: primaryTextStyle.copyWith(
                       fontWeight: semiBold, fontSize: 16),
                 ),
                 SizedBox(height: 6,),
 
                 Text(
-                  "\$68,47",
+                  "\$${product.price}",
                   style: priceTextStyle.copyWith(
                       fontWeight: medium, fontSize: 14),
                 ),

@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:shamo/models/product_model.dart';
 import 'package:shamo/theme.dart';
+
+import '../pages/product_page.dart';
 
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({Key? key}) : super(key: key);
+  final ProductModel product;
+  ProductCard(this.product);
+
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: ()=> Navigator.pushNamed(context, "/product"),
+      onTap: ()=>  Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProductPage(product),
+        ),
+      ),
       child: Container(
         width: 215,
         height: 278,
@@ -21,17 +31,17 @@ class ProductCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 30,),
-            Image.asset("assets/image_shoes.png", width: 215, height: 150, fit: BoxFit.cover,),
+            Image.network(product.galleries![0].url, width: 215, height: 150, fit: BoxFit.cover,),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Hiking", style: secondaryTextStyle.copyWith(fontWeight: regular, fontSize: 12),),
+                  Text(product.category!.name, style: secondaryTextStyle.copyWith(fontWeight: regular, fontSize: 12),),
                   SizedBox(height: 6,),
-                  Text("COURT VISION 2.0", style: blackTextStyle.copyWith(fontWeight: semiBold, fontSize: 18),overflow: TextOverflow.ellipsis,),
+                  Text(product.name!, style: blackTextStyle.copyWith(fontWeight: semiBold, fontSize: 18),overflow: TextOverflow.ellipsis,),
                   SizedBox(height: 6,),
-                  Text("\$58,7", style: priceTextStyle.copyWith(fontWeight: medium, fontSize: 14),),
+                  Text("\$${product.price}", style: priceTextStyle.copyWith(fontWeight: medium, fontSize: 14),),
                 ],
               ),
             )
